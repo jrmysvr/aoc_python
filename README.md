@@ -13,4 +13,5 @@
 
 ## Solutions
 ### [Day 1](day_1)
+### [Day 2](day_2)
 
