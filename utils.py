@@ -2,8 +2,20 @@ import sys
 import json
 import os
 
+## Setup Filepaths ##
+_home = os.path.expanduser("~")
 _base = os.path.dirname(os.path.abspath(__file__))
-config_path = os.path.join(_base, '..', 'aoc_config.json')
+paths = ['.', '..', _home]
+
+config_path = None
+for path in paths:
+    path = os.path.join(path, 'aoc_config.json')
+    if os.path.exists(path):
+        config_path = path
+
+if not config_path:
+    raise Exception("Config not found")
+
 with open(config_path) as f:
     CONFIG = json.load(f)
 
@@ -12,11 +24,15 @@ def get_input_filepath(day: int, year: int) -> str:
     global CONFIG
     global config_path
     fname = f'input_{year}_{day}.txt'
-    fpath = os.path.join(_base,
-                         '..',
+    config_dir = os.path.dirname(config_path)
+    fpath = os.path.join(config_dir,
                          CONFIG['directory'],
                          str(year),
                          fname)
+
+    if not os.path.exists(fpath):
+        os.mkdir(fpath)
+
     return fpath
 
 
