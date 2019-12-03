@@ -37,4 +37,4 @@ Save challenge/input text with the following structure:
 ## Solutions
 ### [Day 1](day_1)
 ### [Day 2](day_2)
-
+### [Day_3](day_3)
