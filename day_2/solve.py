@@ -198,13 +198,13 @@ if __name__ == "__main__":
     end_state = run(initial_state)
 
     ## Part 1 ##
-    print("Solution Day 1 (Part 1):")
+    print(f"Solution Day {day} (Part 1):")
     print("\tEnd State - First Position: ", end_state[0])
 
     write_solution(day, year, str(end_state[0]))
 
     ## Part 2 ##
-    print("Solution Day 1 (Part 2):")
+    print(f"Solution Day {day} (Part 2):")
 
     expected = 19690720
     noun, verb = brute_force(initial_state, expected)
