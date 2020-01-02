@@ -4,8 +4,10 @@
 > python -m pip install -e .
 
 _Additionally, a file called `aoc_config.json` is used to setup filepaths_
+
 _I have the config in a separate module that also uses the config for saving challenge/input text_
 _`utils.py` looks for `aoc_config.json` in the current directory_
+
 _The important field to have in the config is `"directory"`_
 
     {
@@ -38,3 +40,5 @@ Save challenge/input text with the following structure:
 ### [Day 1](day_1)
 ### [Day 2](day_2)
 ### [Day_3](day_3)
+### [Day_4](day_4)
+### [Day_5](day_5)
