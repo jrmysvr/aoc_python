@@ -189,7 +189,7 @@ def opcode_2(state: list, read_ix: int) -> tuple:
     return (False, output, read_ix + 3)
 
 
-def opcode_3(state: list, read_ix: int):
+def opcode_3(state: list, read_ix: int, input_id: int = -1):
     """
     Opcode 3
 
@@ -207,7 +207,10 @@ def opcode_3(state: list, read_ix: int):
     opcode = state[read_ix]
     read_ix += 1
 
-    value = int(input("Input Instruction - Provide an Input Value (Integer):"))
+    value = (int(input("Input Instruction - Provide an Input ID (Integer):"))
+             if input_id < 0
+             else input_id)
+
     write_ix = state[read_ix]
     output = list(state)
     output[write_ix] = value
@@ -263,8 +266,8 @@ def opcode_5(state: list, read_ix: int):
     check = state[read_0] if parameters[0] == 0 else read_0
     value = state[read_1] if parameters[1] == 0 else read_1
 
-    inc = 2 if check == 0 else value - 1
-    return (False, state, read_ix + inc)
+    new_ix = value if check != 0 else read_ix + 2
+    return (False, state, new_ix)
 
 
 def opcode_6(state: list, read_ix: int):
@@ -298,7 +301,6 @@ def opcode_6(state: list, read_ix: int):
 
 
 def opcode_7(state: list, read_ix: int):
-
     opcode = state[read_ix]
     read_ix += 1
     _, parameters = parse_opcode_parameters(opcode)
@@ -318,7 +320,6 @@ def opcode_7(state: list, read_ix: int):
 
 
 def opcode_8(state: list, read_ix: int):
-
     opcode = state[read_ix]
     read_ix += 1
     _, parameters = parse_opcode_parameters(opcode)
@@ -334,7 +335,7 @@ def opcode_8(state: list, read_ix: int):
     read_1 = state[read_1] if parameters[1] == 0 else read_1
     output[write_ix] = 1 if read_0 == read_1 else 0
 
-    return (True, output, read_ix + 3)
+    return (False, output, read_ix + 3)
 
 
 def opcode_99(state: list, read_ix: int) -> tuple:
@@ -354,7 +355,7 @@ def opcode_99(state: list, read_ix: int) -> tuple:
     return state[read_ix] == 99, state, 0
 
 
-def run(state: list):
+def run(state: list, input_id: int = -1):
     """
     run opcodes on state
 
@@ -369,7 +370,8 @@ def run(state: list):
     opcodes = {
         1: opcode_1,
         2: opcode_2,
-        3: opcode_3,
+        # Input instruction to be provided directly to opcode 3
+        3: lambda *args: opcode_3(*args, input_id=input_id),
         4: opcode_4,
         5: opcode_5,
         6: opcode_6,
@@ -400,15 +402,12 @@ if __name__ == "__main__":
     initial_state = list(int_code)
     ## Part 1 ##
     print(f"Solution Day {day} (Part 1):")
-    end_state = run(initial_state)
+    end_state = run(initial_state, input_id=1)
     print("")
-    # Answer is written to stdout
 
     ## Part 2 ##
     print(f"Solution Day {day} (Part 2):")
-    input_text = "3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31, 1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104, 999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99"
     int_code = map(int, input_text.split(","))
     initial_state = list(int_code)
-    end_state = run(initial_state)
-
-    #  write_solution(day, year,
+    end_state = run(initial_state, input_id=5)
+    print("")
