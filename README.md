@@ -42,3 +42,4 @@ Save challenge/input text with the following structure:
 ### [Day_3](day_3)
 ### [Day_4](day_4)
 ### [Day_5](day_5)
+### [Day_6](day_6)
